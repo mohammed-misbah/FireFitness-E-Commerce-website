@@ -1,0 +1,142 @@
+
+{% load static%}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Variation</title>
+
+  <!-- Google Font: Source Sans Pro -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+  <!-- Font Awesome Icons -->
+  <link rel="stylesheet" href="{% static 'Admin/plugins/fontawesome-free/css/all.min.css'%}">
+  <!-- overlayScrollbars -->
+  <link rel="stylesheet" href="{% static 'Admin/plugins/overlayScrollbars/css/OverlayScrollbars.min.css'%}">
+  <!-- Theme style -->
+  <link rel="stylesheet" href="{% static 'Admin/dist/css/adminlte.min.css'%}">
+</head>
+<div class="container-scroller">
+  <!-- partial:partials/_sidebar.html -->
+
+    <!-- partial --> 
+    <div class="main-panel">
+      <div class="content-wrapper">
+        <div class="page-header mb-3">
+          <div class="d-flex justify-content-center">
+          <h2 class="page-title">Variation Management</h2>
+        </div>
+          <nav aria-label="breadcrumb">
+            <a href="{% url 'add_variation' %}">
+
+            <button type="button" class="btn btn-outline-success btn-fw">Add Variation</button>
+          </a>
+            <!-- <ol class="breadcrumb">
+              <li class="breadcrumb-item"><a href="#">Tables</a></li>
+              <li class="breadcrumb-item active" aria-current="page">Basic tables</li>
+            </ol> -->
+          </nav>
+        </div>
+        <div class="row">
+          <div class="col-lg grid-margin stretch-card">
+            <div class="card">
+              <div class="card-body">
+                <div class="d-flex justify-content-center">
+                <h3 class="card-title ">Variations</h3>
+                </div>
+                <!-- <p class="card-description"> Add class <code>.table-hover</code></p> -->
+                <div class="table-responsive">
+                  <table class="table table-hover">
+                    <thead>
+                      <tr>
+                        <th>Product</th>
+                        <th>Variant Category</th>
+                        <th>Value</th>
+                        <th>Active</th>
+                        <th>Action</th>
+                        
+                      </tr>
+                    </thead>
+                    <tbody>
+
+            
+                      
+                        <td>
+                          {% for i in Pvariation %}
+                          <tr>
+                            <td>{{i.product}}</td>
+                            <td>{{i.variation_category}}</td>
+                            <td>{{i.variation_value}}</td>
+                          
+                        <td>
+                          <form action="{% url 'var_block' i.id %}" method="POST">
+                            {% csrf_token %}
+                            {% if i.is_active == True %}
+                            <button type="submit" onclick="showConfirm()" class="btn btn-outline-danger  mx-2">Block</button> 
+                           {% else %}
+                          <button type="submit"  onclick="showConfirm()" class="btn btn-outline-warning ">Unblock</button>
+                          {% endif %}
+                          </form>
+                        </td>
+                        <td>
+                        <form action="{% url 'delete_variant' i.id %}" method="POST"> 
+                          {% csrf_token %}
+                          <button type="submit" onclick="showConfirm()" class="btn btn-outline-danger">Delete</button>
+                        </form>
+                         </td>
+                         
+                      </tr>
+
+                      <!-- for user block -->
+                      <div class="modal" id="delete_category{{cat.id}}" tabindex="-1">
+                        <div class="modal-dialog">
+                          <div class="modal-content">
+                            <div class="modal-header">
+                              <h5 class="modal-title">Delete</h5>
+                              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                              </button>
+                            </div>
+                            <div class="modal-body">
+                              <p>Are you sure you want delete ?</p>
+                            </div>
+                            <div class="modal-footer">
+                              <button type="button" class="btn btn-success" data-dismiss="modal">Cancel</button>
+                              <a href="#">
+                               <button type="button" class="btn btn-danger">Delete</button>
+                              </a>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <!-- end for block -->
+                {% endfor %} 
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+    <!-- REQUIRED SCRIPTS -->
+<!-- jQuery -->
+<script src="{% static 'Admin/plugins/jquery/jquery.min.js'%}"></script>
+<!-- Bootstrap -->
+<script src="{% static 'Admin/plugins/bootstrap/js/bootstrap.bundle.min.js'%}"></script>
+<!-- overlayScrollbars -->
+<script src="{% static 'Admin/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js'%}"></script>
+<!-- AdminLTEApp -->
+<script src="{% static 'Admin/dist/js/adminlte.js'%}"></script>
+
+<!-- PAGE PLUGINS -->
+<!-- jQuery Mapael -->
+<script src="{% static 'Admin/plugins/jquery-mousewheel/jquery.mousewheel.js'%}"></script>
+<script src="{% static 'Admin/plugins/raphael/raphael.min.js'%}"></script>
+<script src="{% static 'Admin/plugins/jquery-mapael/jquery.mapael.min.js'%}"></script>
+<script src="{% static 'Admin/plugins/jquery-mapael/maps/usa_states.min.js'%}"></script>
+<!-- ChartJS -->
+<script src="{% static 'Admin/plugins/chart.js/Chart.min.js'%}"></script>
+
+<!-- AdminLTE for demo purposes -->
+<script src="{% static 'Admin/dist/js/demo.js'%}"></script>
+<!-- AdminLTE dashboard demo (This is only for demo purposes) -->
+<script src="{% static 'Admin/dist/js/pages/dashboard2.js'%}"></script>
+</body>
+</html>

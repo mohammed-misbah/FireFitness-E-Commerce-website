@@ -1,0 +1,173 @@
+
+{% load static%}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Product Offer</title>
+
+  <!-- Google Font: Source Sans Pro -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+  <!-- Font Awesome Icons -->
+  <link rel="stylesheet" href="{% static 'Admin/plugins/fontawesome-free/css/all.min.css'%}">
+  <!-- overlayScrollbars -->
+  <link rel="stylesheet" href="{% static 'Admin/plugins/overlayScrollbars/css/OverlayScrollbars.min.css'%}">
+  <!-- Theme style -->
+  <link rel="stylesheet" href="{% static 'Admin/dist/css/adminlte.min.css'%}">
+</head>
+<body>
+<div style="width:98.5vw;overflow-x:hidden;">
+  <h5 class="card-title" style="width:98.5vw;margin-top:20px;text-align:center;">Add Offer</h5>
+  <div class="card col" style="width: 100vw;margin:auto;">
+    <form style="display: flex; margin: 1rem;margin-left:200px;justify-content:space-between;" action="" method="POST">
+      {% csrf_token %}
+      <div class="col-md-3 " style="margin-left: 50px;display:flex;flex-direction:column;">
+        <label for="validationDefault04" class="form-label">Category</label>
+        <select class="form-select" name="product" id="validationDefault04" style="height:30px;" required>
+          {% for item in prdct %}
+          <option>{{item.prdct_name}}</option>
+          {% endfor %}
+        </select>
+      </div>
+      <div class="col-md-3 ">
+        <label for="validationDefault01" class="form-label">Offer Percentage</label>
+        <input type="number" name="discount" class="form-control" id="validationDefault01" style="width:150px;height:30px;" required>
+      </div>
+      <div class="col-md-3 " style="display:flex;flex-direction:column;margin-left:-110px;">
+        <label for="validationDefault04" class="form-label">Is Active</label>
+        <select class="form-select" name="is_active" id="validationDefault04" style="width:80px;height:30px;" required>
+          <option>True</option>
+          <option>False</option>
+  
+        </select>
+      </div>
+  
+      <div class="col-md-3">
+        <button class="btn btn-primary" style="margin-left:-120px;margin-top:25px;" type="submit">Submit form</button>
+      </div>
+    </form>
+  
+  
+  </div>
+
+
+<div class="container-scroller"> 
+      <div class="content-wrapper mb-3" style="margin-left:0px; width:98vw;">
+        <div class="page-header mb-3">
+          <div class="d-flex justify-content-center">
+          <h2 class="page-title mb-3">Product Offer</h2>
+         </div>
+          {% comment %} <nav aria-label="breadcrumb">
+            <a href="">
+
+            <button type="button" class="btn btn-outline-success btn-fw">Add Offer</button>
+          </a>
+          <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
+      <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+        <li class="dropdown-header text-start">
+          <h6>Filter</h6>
+        </li>
+
+        <li><a class="dropdown-item" href="#">Today</a></li>
+        <li><a class="dropdown-item" href="#">This Month</a></li>
+        <li><a class="dropdown-item" href="#">This Year</a></li>
+      </ul>
+          </nav> {% endcomment %}
+        </div>
+        <div class="row">
+          <div class="col-lg grid-margin stretch-card">
+            <div class="card">
+              <div class="card-body">
+                <div class="d-flex justify-content-center">
+                <h3 class="card-title ">Offer Manage</h3>
+                </div>
+                <!-- <p class="card-description"> Add class <code>.table-hover</code></p> -->
+                <div class="table-responsive">
+                  <table class="table table-hover">
+                    <thead>
+                      <tr>
+                        <th scope="col">Category</th>
+                        <th scope="col">Discount</th>
+                        <th scope="col">Is_Active</th>
+                        <th scope="col">Delete</th>
+                       
+                      </tr>
+                    </thead>
+                    <tbody>
+
+            
+                      
+                        
+                          {% for i in prdctoffer %}
+                            <tr>
+                            <td>{{i.product}}</td>
+                            <td>{{i.discount}}</td>
+                            <td>{{i.is_active}}</td>
+                          
+                        <td>
+                          <form type="submit" action="{% url 'delete_product_offer' i.id %}" method="POST">
+                          {% csrf_token %}
+                          <button data-toggle="modal" data-target="#delete_prdctoffer" method="post" type="submit" class="btn btn-danger ">Delete</button>
+                          </form>
+                        </td>
+                          
+                        
+                      </tr>
+
+                      <!-- for user block -->
+                      <div class="modal" id="delete_category{{cat.id}}" tabindex="-1">
+                        <div class="modal-dialog">
+                          <div class="modal-content">
+                            <div class="modal-header">
+                              <h5 class="modal-title">Delete</h5>
+                              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                              </button>
+                            </div>
+                            <div class="modal-body">
+                              <p>Are you sure you want delete ?</p>
+                            </div>
+                            <div class="modal-footer">
+                              <button type="button" class="btn btn-success" data-dismiss="modal">Cancel</button>
+                              <a href="#">
+                               <button type="button" class="btn btn-danger">Delete</button>
+                              </a>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <!-- end for block -->
+                {% endfor %} 
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+    <!-- REQUIRED SCRIPTS -->
+<!-- jQuery -->
+<script src="{% static 'Admin/plugins/jquery/jquery.min.js'%}"></script>
+<!-- Bootstrap -->
+<script src="{% static 'Admin/plugins/bootstrap/js/bootstrap.bundle.min.js'%}"></script>
+<!-- overlayScrollbars -->
+<script src="{% static 'Admin/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js'%}"></script>
+<!-- AdminLTEApp -->
+<script src="{% static 'Admin/dist/js/adminlte.js'%}"></script>
+
+<!-- PAGE PLUGINS -->
+<!-- jQuery Mapael -->
+<script src="{% static 'Admin/plugins/jquery-mousewheel/jquery.mousewheel.js'%}"></script>
+<script src="{% static 'Admin/plugins/raphael/raphael.min.js'%}"></script>
+<script src="{% static 'Admin/plugins/jquery-mapael/jquery.mapael.min.js'%}"></script>
+<script src="{% static 'Admin/plugins/jquery-mapael/maps/usa_states.min.js'%}"></script>
+<!-- ChartJS -->
+<script src="{% static 'Admin/plugins/chart.js/Chart.min.js'%}"></script>
+
+<!-- AdminLTE for demo purposes -->
+<script src="{% static 'Admin/dist/js/demo.js'%}"></script>
+<!-- AdminLTE dashboard demo (This is only for demo purposes) -->
+<script src="{% static 'Admin/dist/js/pages/dashboard2.js'%}"></script>
+</body>
+</html>
+
+

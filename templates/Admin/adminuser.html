@@ -1,0 +1,111 @@
+{% load static%}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Sub-Category</title>
+
+  <!-- Google gFont: Source Sans Pro -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+  <!-- Font Awesome Icons -->
+  <link rel="stylesheet" href="{% static 'Admin/plugins/fontawesome-free/css/all.min.css'%}">
+  <!-- overlayScrollbars -->
+  <link rel="stylesheet" href="{% static 'Admin/plugins/overlayScrollbars/css/OverlayScrollbars.min.css'%}">
+  <!-- Theme style -->
+  <link rel="stylesheet" href="{% static 'Admin/dist/css/adminlte.min.css'%}">
+</head>
+<body>
+<div class="container-scroller">
+    <!-- partial:partials/_sidebar.html -->
+  
+      <!-- partial --> 
+      <div class="main-panel">
+        <div class="content-wrapper">
+          <div class="page-header">
+            <h3 class="page-title">Admin User List</h3>
+            
+          </div>
+          <div class="input-group">
+            <div class="form-outline">
+              <input type="text" name="key" class="form-control" />
+              <label class="form-label" for="form1" ></label>
+            </div>
+            <button type="submit" class="btn btn-success" style="width:100px;height:40px;">
+              search<i class="fas fa-search"></i>
+            </button>
+          </div>
+          <div class="row">
+            <div class="col-lg grid-margin stretch-card">
+              <div class="card">
+                <div class="card-body">
+                  <h4 class="card-title">User List</h4>
+                  <!-- <p class="card-description"> Add class <code>.table-hover</code></p> -->
+                  <div class="table-responsive">
+                    <table class="table table-hover">
+                      <thead>
+                        <tr>
+                          <th scope="col">UserName</th>
+                          <th scope="col">E-mail</th>
+                          <th scope="col">Phone-Number</th>
+                          <th scope="col">Is_Active</th>
+                        <th scope="col">Delete</th>
+                        
+                        </tr>
+                      </thead>
+                      <tbody> 
+                      {% for i in adminuser %}
+                        <tr>
+                          <td>{{i.username}}</td>
+                          <td>{{i.email}}</td>
+                          <td>{{i.phone_number}}</td>
+
+                          <td>                             
+                            <form action="{% url 'user_block' i.id %}" method="POST">
+                              {% csrf_token %}
+                              {% if i.is_active == True %}
+                              <button type="submit" onclick="showConfirm()" class="btn btn-outline-danger  mx-2">Block</button> 
+                             {% else %}
+                            <button type="submit"  onclick="showConfirm()" class="btn btn-outline-warning ">Unblock</button>
+                            {% endif %}
+                            </form>
+                           </td>   
+                           <td>
+                            <form type="submit" action="{% url 'user_delete' i.id %}" method="POST">
+                              {% csrf_token %}
+                              <button data-toggle="modal" data-target="#delete_prdctoffer" method="post" type="submit" class="btn btn-danger ">Delete</button>
+                              </form>
+                           </td>                      
+                        </tr> 
+                           {% endfor %}                 
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+  
+
+ <!-- REQUIRED SCRIPTS -->
+<!-- jQuery -->
+<script src="{% static 'Admin/plugins/jquery/jquery.min.js'%}"></script>
+<!-- Bootstrap -->
+<script src="{% static 'Admin/plugins/bootstrap/js/bootstrap.bundle.min.js'%}"></script>
+<!-- overlayScrollbars -->
+<script src="{% static 'Admin/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js'%}"></script>
+<!-- AdminLTEApp -->
+<script src="{% static 'Admin/dist/js/adminlte.js'%}"></script>
+
+<!-- PAGE PLUGINS -->
+<!-- jQuery Mapael -->
+<script src="{% static 'Admin/plugins/jquery-mousewheel/jquery.mousewheel.js'%}"></script>
+<script src="{% static 'Admin/plugins/raphael/raphael.min.js'%}"></script>
+<script src="{% static 'Admin/plugins/jquery-mapael/jquery.mapael.min.js'%}"></script>
+<script src="{% static 'Admin/plugins/jquery-mapael/maps/usa_states.min.js'%}"></script>
+<!-- ChartJS -->
+<script src="{% static 'Admin/plugins/chart.js/Chart.min.js'%}"></script>
+
+<!-- AdminLTE for demo purposes -->
+<script src="{% static 'Admin/dist/js/demo.js'%}"></script>
+<!-- AdminLTE dashboard demo (This is only for demo purposes) -->
+<script src="{% static 'Admin/dist/js/pages/dashboard2.js'%}"></script>
+</body>
+</html>

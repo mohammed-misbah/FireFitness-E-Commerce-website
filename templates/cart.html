@@ -1,0 +1,443 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="zxx" class="no-js">
+<head>
+    <!-- Mobile Specific Meta -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Favicon-->
+    <link rel="shortcut icon" href="img/fav.png">
+    <!-- Author Meta -->
+    <meta name="author" content="CodePixar">
+    <!-- Meta Description -->
+    <meta name="description" content="">
+    <!-- Meta Keyword -->
+    <meta name="keywords" content="">
+    <!-- meta character set -->
+    <meta charset="UTF-8">
+    <!-- Site Title -->
+    <title>Fire Fitness</title>
+    
+    <script
+    src="https://code.jquery.com/jquery-3.6.3.js"
+    integrity="sha256-nQLuAZGRRcILA+6dMBOvcRh5Pe310sBpanc6+QBmyVM="
+    crossorigin="anonymous"></script>
+
+    <link rel="stylesheet" href="{% static 'css/linearicons.css' %}">
+    <link rel="stylesheet" href="{% static 'css/owl.carousel.css' %}">
+    <link rel="stylesheet" href="{% static 'css/font-awesome.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/themify-icons.css' %}">
+    <link rel="stylesheet" href="{% static 'css/nice-select.css' %}">
+    <link rel="stylesheet" href="{% static 'css/nouislider.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
+    <link rel="stylesheet" href="{% static 'css/main.css' %}">
+</head>
+
+<body>
+
+    <!-- Start Header Area -->
+	<header class="header_area sticky-header">
+		<div class="main_menu">
+			<nav class="navbar navbar-expand-lg navbar-light main_box">
+				<div class="container">
+					<!-- Brand and toggle get grouped for better mobile display -->
+					<a class="navbar-brand logo_h" href="{% url 'home' %}"><img src="{% static 'D:\WebProject\Fitness\static\img\Fire Fitness.png' %}" alt="" height=70 width=95></a>
+					<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+					 aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+					</button>
+					<!-- Collect the nav links, forms, and other content for toggling -->
+					<div class="collapse navbar-collapse offset" id="navbarSupportedContent">
+						<ul class="nav navbar-nav menu_nav ml-auto">
+							<li class="nav-item"><a class="nav-link" href="{% url 'home' %}">Home</a></li>
+							<li class="nav-item submenu dropdown active">
+								<a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+								 aria-expanded="false">Shop</a>
+								<ul class="dropdown-menu">
+									<li class="nav-item"><a class="nav-link" href="{% url 'store' %}">Store</a></li>
+									<li class="nav-item"><a class="nav-link" href="single-product.html">Product Details</a></li>
+								</ul>
+							</li>
+							<li class="nav-item submenu dropdown">
+								<a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+								 aria-expanded="false">Blog</a>
+								<ul class="dropdown-menu">
+									<li class="nav-item"><a class="nav-link" href="blog.html">Blog</a></li>
+									<li class="nav-item"><a class="nav-link" href="single-blog.html">Blog Details</a></li>
+								</ul>
+							</li>
+							<li class="nav-item submenu dropdown">
+								<a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+								 aria-expanded="false">Pages</a>
+								<ul class="dropdown-menu">
+									<li class="nav-item"><a class="nav-link" href="login.html">Login</a></li>
+									<li class="nav-item"><a class="nav-link" href="tracking.html">Tracking</a></li>
+									<li class="nav-item"><a class="nav-link" href="elements.html">Elements</a></li>
+								</ul>
+							</li>
+						</ul>
+						<ul class="nav navbar-nav navbar-right">
+							<li class="nav-item"><a href="{% url 'cart' %}" class="cart"><span class="ti-bag"></span></a></li>
+							<li class="nav-item">
+								<button class="search"><span class="lnr lnr-magnifier" id="search"></span></button>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</nav>
+		</div>
+		<div class="search_input" id="search_input_box">
+			<div class="container">
+				<form class="d-flex justify-content-between">
+					<input type="text" class="form-control" id="search_input" placeholder="Search Here">
+					<button type="submit" class="btn"></button>
+					<span class="lnr lnr-cross" id="close_search" title="Close Search"></span>
+				</form>
+			</div>
+		</div>
+	</header>
+	<!-- End Header Area -->
+
+    <!-- Start Banner Area -->
+    <section class="banner-area organic-breadcrumb">
+        <div class="container">
+            <div class="breadcrumb-banner d-flex flex-wrap align-items-center justify-content-end">
+                <div class="col-first">
+                    <h1>Shopping Cart</h1>
+                    <nav class="d-flex align-items-center">
+                        <a href="index.html">Home<span class="lnr lnr-arrow-right"></span></a>
+                        <a href="category.html">Cart</a>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- End Banner Area -->
+
+    <!--================Cart Area =================-->
+    {% if not cart_items %}
+  
+    <h3 class="text-center">Your Shoping Cart is Empty</h3><br>
+    <div class="text-center">
+        <div class="checkout_btn_inner d-flex align-items-center d-flex justify-content-center">
+            <a href="{% url 'store' %}" class="gray_btn" >Continue Shopping</a>
+         </div>
+    </div>
+
+    {% else %}
+    <section class="cart_area">
+        <div class="container">
+            <div class="cart_inner">
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col">Product</th>
+                               
+                                <th scope="col">Price</th>
+                                <th scope="col">Quantity</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- image 1 -->
+                            {% for i in cart_items %}
+              
+                            <tr>
+                                <td>
+                                    <div class="media">
+                                        <div class="d-flex">
+                                            <img src="/media/{{ i.product.img1}}" width="140" height="160" alt="">
+                                        </div>
+                                        <div class="media-body">
+                                            <a href="{{ i.get_url }}" class="title text-dark"><p>{{ i.product.prdct_name }}</p></a>
+                                        </div>
+                                        <p class="text-muted small">
+                                           {% if i.variations.all %}
+                                                {% for item in i.variations.all %}
+                                                     {{ item.variation_category | capfirst }}:{{ item.variation_value | capfirst }} <br>
+                                                {% endfor %}
+                                            {% endif %}
+                                        </p>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="price-wrap">
+                                      <var class="price"><h5>Rs:{{ i.sub_total }}</h5></var>
+                                      <small class="text-muted">Rs:{{i.price|floatformat:"2"}}</small>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="product_count">
+                                        
+                                        <div class="input-group-append">
+                                            <form action="{% url 'add_cart' i.product.id %}" method="POST">
+                                                {% csrf_token %}
+                                                {% if cart_item.variation.all %}
+                                                {% for item in cart_item.variation.all %}
+                                                       <input type="hidden" name="{{ item.variation_category | lower }}" value="{{ item.variation_value | capfirst }}">
+                                                {% endfor %}
+                                                {% endif %}
+                                                <button class="increase items-count" type="submit" id="button-minus"><i class="lnr lnr-chevron-up"></i></button>
+                                            </form>
+                                        </div>
+                                            <input type="text" name="qty" id="sst" maxlength="12" value="{{ i.quantity }}" title="Quantity:" class="input-text qty">
+                                        <div class="input-group-append">
+                                          <a href="{% url 'decrease_quantity' i.product.id i.id %}" class="reduced items-count" type="button" id="button-minus"><i class="lnr lnr-chevron-down"></i></a>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="text-right">  
+                                   <a href="{% url 'delete_cart_item' i.id%}" onclick="return confirm('Are you sure you want to delete this item?')" class="primary-btn">Remove</a> 
+                                </td>
+                            </tr>
+                            {% endfor %}
+                          <!-- image 1 end -->
+
+                        <!-- Coupon area -->
+                            <tr class="bottom_button">
+                                <td>
+                                    <a class="gray_btn" href="#">Update Cart</a>
+                                </td>
+                                <td>
+
+                                </td>
+                                <td>
+
+                                </td>
+                                <td>
+                                     {% if cart_items.coupon == None %} 
+                                    <div class="cupon_text d-flex align-items-center">
+                                        <form action="{% url 'cart' %}" method="POST" style="display:flex">
+                                            {% csrf_token %}
+                                            <input type="text" name="coupon" placeholder="Coupon Code">
+                                                <button style="border:none;" type="submit" class="primary-btn" href="#">Apply Coupon</button>
+                                        </form>i
+                                        {% else %}
+
+                                        <div class="flex-w flex-m m-r-20 m-tb-5">
+                                            <button  class="stext-104 cl2 plh4 size-117 bor13 p-lr-20 m-r-10 m-tb-5">{{code}}</button>
+                                        </div>
+
+                                                    <div class="flex-c-m stext-101 cl2 size-118 bg8 bor13 hov-btn3 p-lr-15 trans-04 pointer m-tb-5">
+                                                       <button style="border:none;" type="submit" class="primary-btn">Remove Coupon</button> 
+                                                    </div>
+
+                                                    {% endif %}
+                                                
+                                    </div>
+                                </td>
+                            </tr>
+                           
+                        <!-- Coupon area end -->
+                            <tr class="shipping_area">
+                                <td>
+
+                                </td>
+                                <td>
+
+                                </td>
+                                <td>
+                                    <table class="table table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th>Total:</th>
+                                                <th>Rs:{{ total|floatformat:"2" }}</th>
+                                            </tr>
+                                          <tr>
+                                            <th scope="col">Tax:</th>
+                                            <th scope="col">Rs:{{tax|floatformat:"2"}}</th>
+                                          </tr>
+                                          <tr>
+                                            <th scope="col">Coupon Discount:</th>
+                                            <th scope="col">Rs:{{discount}}</th>
+                                          </tr>
+                                        </thead>
+                                        <tbody>
+                                          <tr>
+                                            <td><strong>Grand Total:</strong></td>
+                                            <td><strong>Rs:{{grand_total|floatformat:"2"}}</strong></td>
+                                          </tr>
+                                        </tbody>
+                                      </table>
+                                </td>
+                            </tr>
+                            <tr class="out_button_area">
+                                <td>
+
+                                </td>
+                                <td>
+
+                                </td>
+                                <td>
+
+                                </td>
+                                <td>
+                                    <div class="checkout_btn_inner d-flex align-items-center">
+                                        <a class="gray_btn" href="{% url 'store' %}">Continue Shopping</a>
+                                        <a class="primary-btn" href="{% url 'checkout' %}">Proceed to checkout</a>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    {% endif %}
+
+    <!--================End Cart Area =================-->
+
+    <!-- start footer Area -->
+    <footer class="footer-area section_gap">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3  col-md-6 col-sm-6">
+                    <div class="single-footer-widget">
+                        <h6>About Us</h6>
+                        <p>
+                            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt
+                            ut labore dolore
+                            magna aliqua.
+                        </p>
+                    </div>
+                </div>
+                <div class="col-lg-4  col-md-6 col-sm-6">
+                    <div class="single-footer-widget">
+                        <h6>Newsletter</h6>
+                        <p>Stay update with our latest</p>
+                        <div class="" id="mc_embed_signup">
+
+                            <form target="_blank" novalidate="true" action="https://spondonit.us12.list-manage.com/subscribe/post?u=1462626880ade1ac87bd9c93a&amp;id=92a4423d01"
+                                method="get" class="form-inline">
+
+                                <div class="d-flex flex-row">
+
+                                    <input class="form-control" name="EMAIL" placeholder="Enter Email" onfocus="this.placeholder = ''"
+                                        onblur="this.placeholder = 'Enter Email '" required="" type="email">
+
+
+                                    <button class="click-btn btn btn-default"><i class="fa fa-long-arrow-right"
+                                            aria-hidden="true"></i></button>
+                                    <div style="position: absolute; left: -5000px;">
+                                        <input name="b_36c4fd991d266f23781ded980_aefe40901a" tabindex="-1" value=""
+                                            type="text">
+                                    </div>
+
+                                    <!-- <div class="col-lg-4 col-md-4">
+													<button class="bb-btn btn"><span class="lnr lnr-arrow-right"></span></button>
+												</div>  -->
+                                </div>
+                                <div class="info"></div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3  col-md-6 col-sm-6">
+                    <div class="single-footer-widget mail-chimp">
+                        <h6 class="mb-20">Instragram Feed</h6>
+                        <ul class="instafeed d-flex flex-wrap">
+                            <li><img src="{% static 'img/i1.jpg' %}" alt=""></li>
+                            <li><img src="{% static 'img/i2.jpg' %}" alt=""></li>
+                            <li><img src="{% static 'img/i3.jpg' %}" alt=""></li>
+                            <li><img src="{% static 'img/i4.jpg' %}" alt=""></li>
+                            <li><img src="{% static 'img/i5.jpg' %}" alt=""></li>
+                            <li><img src="{% static 'img/i6.jpg' %}" alt=""></li>
+                            <li><img src="{% static 'img/i7.jpg' %}" alt=""></li>
+                            <li><img src="{% static 'img/i8.jpg' %}" alt=""></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-6 col-sm-6">
+                    <div class="single-footer-widget">
+                        <h6>Follow Us</h6>
+                        <p>Let us be social</p>
+                        <div class="footer-social d-flex align-items-center">
+                            <a href="#"><i class="fa fa-facebook"></i></a>
+                            <a href="#"><i class="fa fa-twitter"></i></a>
+                            <a href="#"><i class="fa fa-dribbble"></i></a>
+                            <a href="#"><i class="fa fa-behance"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+    </footer>
+    <!-- End footer Area -->
+
+    <script src="{% static 'js/vendor/jquery-2.2.4.min.js' %}"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4"
+	 crossorigin="anonymous"></script>
+	<script src="{% static 'js/vendor/bootstrap.min.js' %}"></script>
+	<script src="{% static 'js/jquery.ajaxchimp.min.js' %}"></script>
+	<script src="{% static 'js/jquery.nice-select.min.js' %}"></script>
+	<script src="{% static 'js/jquery.sticky.js' %}"></script>
+    <script src="{% static 'js/nouislider.min.js' %}"></script>
+	<script src="{% static 'js/jquery.magnific-popup.min.js' %}"></script>
+	<script src="{% static 'js/owl.carousel.min.js' %}"></script>
+	<!--gmaps Js-->
+	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCjCGmQ0Uq4exrzdcL6rvxywDDOvfAu6eE"></script>
+	<script src="{% static 'js/gmaps.min.js' %}"></script>
+	<script src="{% static 'js/main.js' %}"></script>
+
+    <!-- <script>
+ function decreaseQuantity(qnty,id,sub_total,c_id){
+    var qnty= $('#'+qnty)
+    var sub_total =$('#'+sub_total)
+ 
+  $.ajax({
+    type: "GET"
+    url: "/cart/decrease_quantity",
+    data: {
+      'id':id,
+      'c_id':c_id
+    },
+    success: function (response) {
+        if(r.status==true){
+
+            $(qnty).val(r.quantity)
+            $(sub_total).text("Rs:"+r.sub_total)
+            $('#total').text("Rs:"+r.total)
+            $('#total_price').text("Rs:"+r.total_price)
+            $('#saved').text("-"+r.saved)
+        }else{
+            console.log('not possible')
+        }
+        },
+        error:function(r){
+            alert('Error Occured')
+        }
+  });
+}
+
+
+function increaseQuantity(qnty,id,sub_total,c_id){
+    var qnty=$('#'+qnty)
+    var sub_total =$('#'sub_total)
+
+    $.ajax({
+        type:"GET",
+        url:"/cart/increase_quantity",
+        data:{
+            'id':id,
+            'c_id':c_id
+        },
+        success : function(r){
+            $(qnty).val(r.quantity)
+            $(sub_total).text("Rs:"+r.sub_total)
+            $('#total').text("Rs"+r.total)
+            $('#total_price').text("Rs:"+r.total_price)
+            $('#saved').text("-"+r.saved)
+        },
+        error:function(r){
+            alert('Error Occured')
+        }
+    });
+}
+
+</script> -->
+</body>
+</html>

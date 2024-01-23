@@ -1,0 +1,145 @@
+{% load static%}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Product-List</title>
+
+  <!-- Google Font: Source Sans Pro -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+  <!-- Font Awesome Icons -->
+  <link rel="stylesheet" href="{% static 'Admin/plugins/fontawesome-free/css/all.min.css'%}">
+  <!-- overlayScrollbars -->
+  <link rel="stylesheet" href="{% static 'Admin/plugins/overlayScrollbars/css/OverlayScrollbars.min.css'%}">
+  <!-- Theme style -->
+  <link rel="stylesheet" href="{% static 'Admin/dist/css/adminlte.min.css'%}">
+</head>
+<div class="container-scroller">
+  <!-- partial:partials/_sidebar.html -->
+
+    <!-- partial --> 
+    <div class="main-panel">
+      <div class="content-wrapper">
+        <div class="page-header mb-3">
+          <div class="d-flex justify-content-center">
+          <h2 class="page-title">Product Management</h2>
+        </div>
+          <nav aria-label="breadcrumb">
+            <a href="{% url 'add_product' %}">
+
+            <button class="btn btn-outline-success btn-fw">Add product</button>
+          </a>
+            <!-- <ol class="breadcrumb">
+              <li class="breadcrumb-item"><a href="#">Tables</a></li>
+              <li class="breadcrumb-item active" aria-current="page">Basic tables</li>
+            </ol> -->
+          </nav>
+        </div>
+        <div class="row">
+          <div class="col-lg grid-margin stretch-card">
+            <div class="card">
+              <div class="card-body">
+                <div class="d-flex justify-content-center">
+                <h3 class="card-title ">Product List</h3>
+                </div>
+                <!-- <p class="card-description"> Add class <code>.table-hover</code></p> -->
+                <div class="table-responsive">
+                  <table class="table table-hover">
+                    <thead>
+                      <tr>
+                        <th>SL NO</th>
+                        <th>Image</th>
+                        <th>Product Name</th>
+                        <th>Slug</th>
+                        <th>Product Description</th>
+                        <th>Price</th>
+                         <th>Stock</div>
+                            <th>Added Date</th> 
+                            <th>Action</th>      
+                      </tr>
+                    </thead>
+                    <tbody>
+
+            
+                      <tr>
+                        
+                          {% for i in product_display %}
+                    
+                            <td>{{ i.id }}</td>
+                            <td><img src="/media/{{i.img1}}" alt="" border=2 height=150 width=150></td>
+                            <td>{{i.prdct_name}}</td>
+                            <td>{{i.slug}}</td>
+                            <td>{{i.prdct_desc}}</td>
+                            <td>{{i.price}}</td>
+                            <td>{{i.stock}}</td>
+                            <td>{{i.created_date}}</td>
+                            <td>
+                          <a href="{% url 'prdctlist_edit' i.id %}">
+                        
+                            <button type="button" class="btn btn-success  mx-2">Edit</button> 
+                          </a>
+                          <a href="{% url 'prdctlist_delete' i.id %}">
+                            
+                          <button data-toggle="modal" data-target="#delete_category" method="post" type="button" class="btn btn-danger ">Delete</button>
+                          
+                          {% csrf_token %}
+                          </a>
+                         </td>
+                          
+                        </td>
+                      </tr>
+
+                      <!-- for user block -->
+                      <div class="modal" id="delete_category{{cat.id}}" tabindex="-1">
+                        <div class="modal-dialog">
+                          <div class="modal-content">
+                            <div class="modal-header">
+                              <h5 class="modal-title">Delete</h5>
+                              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                              </button>
+                            </div>
+                            <div class="modal-body">
+                              <p>Are you sure you want delete ?</p>
+                            </div>
+                            <div class="modal-footer">
+                              <button type="button" class="btn btn-success" data-dismiss="modal">Cancel</button>
+                              <a href="#">
+                               <button type="button" class="btn btn-danger">Delete</button>
+                              </a>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <!-- end for block -->
+                {% endfor %} 
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+    <!-- REQUIRED SCRIPTS -->
+<!-- jQuery -->
+<script src="{% static 'Admin/plugins/jquery/jquery.min.js'%}"></script>
+<!-- Bootstrap -->
+<script src="{% static 'Admin/plugins/bootstrap/js/bootstrap.bundle.min.js'%}"></script>
+<!-- overlayScrollbars -->
+<script src="{% static 'Admin/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js'%}"></script>
+<!-- AdminLTEApp -->
+<script src="{% static 'Admin/dist/js/adminlte.js'%}"></script>
+
+<!-- PAGE PLUGINS -->
+<!-- jQuery Mapael -->
+<script src="{% static 'Admin/plugins/jquery-mousewheel/jquery.mousewheel.js'%}"></script>
+<script src="{% static 'Admin/plugins/raphael/raphael.min.js'%}"></script>
+<script src="{% static 'Admin/plugins/jquery-mapael/jquery.mapael.min.js'%}"></script>
+<script src="{% static 'Admin/plugins/jquery-mapael/maps/usa_states.min.js'%}"></script>
+<!-- ChartJS -->
+<script src="{% static 'Admin/plugins/chart.js/Chart.min.js'%}"></script>
+
+<!-- AdminLTE for demo purposes -->
+<script src="{% static 'Admin/dist/js/demo.js'%}"></script>
+<!-- AdminLTE dashboard demo (This is only for demo purposes) -->
+<script src="{% static 'Admin/dist/js/pages/dashboard2.js'%}"></script>
+</body>
+</html>
