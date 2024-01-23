@@ -6,7 +6,7 @@ from django.contrib.auth import login as loogin
 from django.contrib.auth.decorators import login_required
 from .models import User
 from Product.models import Product
-from Protien import 
+from Protien import otp
 from ast import literal_eval
 from Cart.models import Cart,CartItem
 from Cart.views import _cart_id 
