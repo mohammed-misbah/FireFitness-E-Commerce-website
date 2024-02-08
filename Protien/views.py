@@ -26,54 +26,89 @@ def home(request):
 #=============Register Page============#
 
 def register(request):
-    if request.method =='POST':
-        # is_private = request.POST.get('is_private', False)
+    if request.method == 'POST':
+        username = request.POST['username']
+        email = request.POST['email']
+        phoneNumber = request.POST['phone_number']
+        password1 = request.POST['password1']
+        password2 = request.POST['password2']
 
-        username=request.POST['username']
-        email=request.POST['email']
-        phoneNumber=request.POST['phone_number']
-        
-        password1=request.POST['password1']
-        password2=request.POST['password2']
-        if password1==password2:
+        if password1 == password2:
             if User.objects.filter(username=username).exists():
-                messages.info(request,'name is Taken')
+                messages.info(request, 'Username is Taken')
                 return redirect('register')
-            
-            elif len(phoneNumber)<10 or len(phoneNumber) >14:
-                messages.error(request,'Phone-number is not Valid!!!')
+
+            elif len(phoneNumber) < 10 or len(phoneNumber) > 14:
+                messages.error(request, 'Phone number is not valid!!!')
                 return redirect('register')
+
             elif User.objects.filter(email=email).exists() or User.objects.filter(phone_number=phoneNumber).exists():
-                messages.error(request,'The User is Already Taken')
+                messages.error(request, 'The user is already taken')
                 return redirect('register')
-                
+
             else:
-              print(phoneNumber)
-              msg =  otp.send_request(phoneNumber)
-              if msg == True:
-                messages.success(request,'Otp Sended Successfully')
-                print("in true")
-                dict = {         
-                    'username' : username,
-                    'email' : email,
-                    'phone' : phoneNumber,
-                    'password' : password1
-                  }
-                res =  render(request,'otp.html')
-                res.set_cookie('userdetails',dict)
-                return res
-              else:
-                print("in else")
-                messages.error(request,'Something went wrong!!!')
-                return redirect('register')  
+                # Create a new user if all conditions are satisfied
+                user = User.objects.create_user(username=username, email=email, password=password1)
+                user.save()
+                messages.success(request, 'Registration successful!')
+                return redirect('login')
 
         else:
-            
-            messages.info(request,'password is not matching')
+            messages.info(request, 'Passwords do not match')
             return redirect('register')
-        
+
     else:
-        return render(request,'register.html')
+        return render(request, 'register.html')
+    
+# def register(request):
+#     if request.method =='POST':
+#         # is_private = request.POST.get('is_private', False)
+
+#         username=request.POST['username']
+#         email=request.POST['email']
+#         phoneNumber=request.POST['phone_number']
+        
+#         password1=request.POST['password1']
+#         password2=request.POST['password2']
+#         if password1==password2:
+#             if User.objects.filter(username=username).exists():
+#                 messages.info(request,'name is Taken')
+#                 return redirect('register')
+            
+#             elif len(phoneNumber)<10 or len(phoneNumber) > 14:
+#                 messages.error(request,'Phone-number is not Valid!!!')
+#                 return redirect('register')
+#             elif User.objects.filter(email=email).exists() or User.objects.filter(phone_number=phoneNumber).exists():
+#                 messages.error(request,'The User is Already Taken')
+#                 return redirect('register')
+                
+            # else:
+            #   print(phoneNumber)
+            #   msg =  otp.send_request(phoneNumber)
+            #   if msg == True:
+            #     messages.success(request,'Otp Sended Successfully')
+            #     print("in true")
+            #     dict = {         
+            #         'username' : username,
+            #         'email' : email,
+            #         'phone_number' : phoneNumber,
+            #         'password' : password1
+            #       }
+            # res =  render(request,'otp.html')
+            # res.set_cookie('userdetails',dict)
+            # return res
+    #         else:
+    #             print("in else")
+    #             messages.error(request,'Something went wrong!!!')
+    #             return redirect('register')  
+
+    #     else:
+            
+    #         messages.info(request,'password is not matching')
+    #         return redirect('register')
+        
+    # else:
+    #     return render(request,'register.html')
 
 #==============Login Page==============#
 
